@@ -1,7 +1,12 @@
 {
   "compilerOptions": {
+    "moduleResolution": "nodenext",
+    "target": "ES2021",
+    "checkJs": false,
+    "allowJs": true,
     "paths": {
       "@/*": ["./src/*"]
     }
   }
 }
+
