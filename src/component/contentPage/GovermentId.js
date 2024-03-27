@@ -28,8 +28,8 @@ const GovermentId = ({ handleSetResult, nextStep }) => {
   return (
     <div>
       <Form
-        method="POST"
-        target="api/upload/route"
+        // method="POST"
+        // target="api/upload/route"
         form={form}
         style={{
           maxWidth: 600,
