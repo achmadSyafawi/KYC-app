@@ -22,5 +22,6 @@ export const senApi = async ({ img, type }) => {
   };
 
   const response = await fetch("/api/upload/route", config);
+
   return response.json();
 };

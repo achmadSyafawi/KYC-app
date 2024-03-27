@@ -39,8 +39,7 @@ const GovermentId = ({ handleSetResult, nextStep }) => {
           paddingBottom: "10px",
         }}
         layout="vertical"
-        // onFinish={onSubmit}
-        onSubmitCapture={onSubmit}
+        onFinish={onSubmit}
       >
         {error ? <div>{error.error}</div> : null}
         <Form.Item
