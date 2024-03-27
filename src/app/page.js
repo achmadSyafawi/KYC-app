@@ -1,95 +1,117 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 
-export default function Home() {
+import React, { useState } from "react";
+import { Button, Flex, message, Steps, theme } from "antd";
+import Start from "@/component/contentPage/Start";
+import GovermentId from "@/component/contentPage/GovermentId";
+import LastResult from "@/component/contentPage/LastResult";
+const steps = [
+  {
+    key: "start",
+    title: "Start",
+    content: "Start",
+  },
+  {
+    key: "govid",
+    title: "Goverment ID verification",
+    content: "Goverment-id-verification",
+  },
+  {
+    key: "success",
+    title: "Success",
+    content: "success",
+  },
+];
+const Home = () => {
+  const { token } = theme.useToken();
+  const [current, setCurrent] = useState(0);
+  const [result, setResult] = useState([]);
+  const [img, setImg] = useState(null);
+
+  const next = (i) => {
+    if (i > 0) {
+      setCurrent(current + i);
+    } else {
+      setCurrent(current + 1);
+    }
+  };
+
+  const prev = () => {
+    setCurrent(current - 1);
+  };
+
+  const handleSetResult = (res, img) => {
+    setResult(res);
+    setImg(img);
+    next();
+  };
+
+  const items = steps.map((item) => ({
+    key: item.title,
+    title: item.title,
+  }));
+
+  const contentStyle = {
+    lineHeight: "100px",
+    textAlign: "center",
+    color: token.colorTextTertiary,
+    backgroundColor: token.colorFillAlter,
+    borderRadius: token.borderRadiusLG,
+    border: `1px dashed ${token.colorBorder}`,
+    marginTop: 16,
+  };
+
+  const content = () => {
+    if (steps[current].key === "start") {
+      return <Start nextStep={next} />;
+    }
+
+    if (steps[current].key === "govid") {
+      return <GovermentId handleSetResult={handleSetResult} nextStep={next} />;
+    }
+
+    if (steps[current].key === "success") {
+      return <LastResult result={result} img={img} />;
+    }
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <Flex gap="middle" justify="center" vertical style={{ margin: "10%" }}>
+      <Steps current={current} items={items} />
+
+      <div style={contentStyle}>{content()}</div>
+
+      {/* button */}
+      <div
+        style={{
+          marginTop: 24,
+        }}
+      >
+        {current < steps.length - 1 && (
+          <Button type="primary" onClick={() => next()}>
+            Next
+          </Button>
+        )}
+        {current === steps.length - 1 && (
+          <Button
+            type="primary"
+            onClick={() => message.success("Processing complete!")}
           >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+            Done
+          </Button>
+        )}
+        {current > 0 && (
+          <Button
+            style={{
+              margin: "0 8px",
+            }}
+            onClick={() => prev()}
+          >
+            Previous
+          </Button>
+        )}
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </Flex>
   );
-}
+};
+export default Home;
