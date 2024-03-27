@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+module.exports = {
   reactStrictMode: true,
   transpilePackages: ["react-router-typing"],
 };
 
-export default nextConfig;
+// module.exports nextConfig;
