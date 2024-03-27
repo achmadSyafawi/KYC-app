@@ -2,7 +2,7 @@
 const nextConfig = {
   basePath: "/kyc-app",
   reactStrictMode: true,
-  output: "export",
+  // output: "export", //enable export
 };
 
 module.exports = nextConfig;
