@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: "/kyc-app",
-  reactStrictMode: true,
+  // basePath: "/kyc-app",
   // output: "export", //enable export
+  reactStrictMode: true,
 };
 
 module.exports = nextConfig;
