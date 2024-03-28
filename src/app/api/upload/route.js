@@ -28,11 +28,11 @@ const sendToGlair = async (path, url, config) => {
 export async function POST(request) {
   const data = await request.formData();
   const type = data.get("type");
-  const file = data.get("file");
+  const file = data.get("image");
   let url = "";
 
   if (type === "ktp") {
-    url = `${BASE_URL}ocr/v1/ktp/qualities`;
+    url = `${BASE_URL}ocr/v1/ktp`;
   } else if (type === "npwp") {
     url = `${BASE_URL}ocr/v1/npwp`;
   } else if (type === "sim") {

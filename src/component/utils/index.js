@@ -12,7 +12,7 @@ export const senApi = async ({ img, type }) => {
   const data = new FormData();
   let url = "";
   // data.set("file", img);
-  // data.set("type", type);
+  data.set("type", type);
   data.set("image", img);
   const config = {
     method: "POST",
@@ -34,12 +34,14 @@ export const senApi = async ({ img, type }) => {
   }
 
   try {
-    const response = await fetch(url, config);
-    const responseData = await response.json();
+    // const response = await fetch(url, config);
+    // const responseData = await response.json();
+    const response = await fetch("/api/upload", config);
 
     // console.log(responseData);
+    return response.json();
 
-    return responseData;
+    // return responseData;
   } catch (err) {
     return { success: false, errMsg: err.message };
   }

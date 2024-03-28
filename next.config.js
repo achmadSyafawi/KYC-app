@@ -3,7 +3,6 @@ const nextConfig = {
   // basePath: "/kyc-app",
   // output: "export", //enable export
   distDir: "/out",
-  // output: "standalone",
   output: "standalone",
   reactStrictMode: true,
   trailingSlash: true,
