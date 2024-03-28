@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "moduleResolution": "nodenext",
     "target": "ES2021",
     "checkJs": false,
     "allowJs": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@/components/*": ["components/*"],
     }
   }
 }
