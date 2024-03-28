@@ -1,5 +1,3 @@
-"use server";
-
 import { NextRequest, NextResponse } from "next/server";
 import { Vision } from "@glair/vision";
 import { join } from "path";
@@ -36,11 +34,11 @@ export async function POST(request) {
   if (type === "ktp") {
     url = `${BASE_URL}ocr/v1/ktp/qualities`;
   } else if (type === "npwp") {
-    url = `${BASE_URL}/ocr/v1/npwp`;
+    url = `${BASE_URL}ocr/v1/npwp`;
   } else if (type === "sim") {
     url = `${BASE_URL}ocr/v1/kk`;
   } else {
-    url = `${BASE_URL}/ocr/v1/sim`;
+    url = `${BASE_URL}ocr/v1/sim`;
   }
 
   if (!file) {
