@@ -5,7 +5,7 @@ import Image from "next/image";
 const LastResult = ({ result, img }) => {
   return (
     <Row gutter={[8, 16]}>
-      <Col span={12}>
+      <Col lg={12} xs={24}>
         <Image
           src={`${URL.createObjectURL(img)}`}
           width={200}
@@ -13,7 +13,7 @@ const LastResult = ({ result, img }) => {
           alt="Picture of the author"
         />
       </Col>
-      <Col span={12}>
+      <Col lg={12} xs={24}>
         {Object.keys(result.read).map((item, idx) => {
           const { confidence, value } = result.read[item];
           return (
@@ -23,13 +23,13 @@ const LastResult = ({ result, img }) => {
                 backgroundColor: `${idx % 2 === 0 ? "lightgray" : "white"}`,
               }}
             >
-              <Col xs={2} sm={4} md={6} lg={8} xl={10}>
+              <Col xs={8} sm={4} md={6} lg={4} xl={10}>
                 {item}
               </Col>
-              <Col xs={20} sm={16} md={12} lg={8} xl={4}>
+              <Col xs={8} sm={16} md={12} lg={4} xl={4}>
                 {value ? value : "-"}
               </Col>
-              <Col xs={2} sm={4} md={6} lg={8} xl={10}>
+              <Col xs={8} sm={4} md={6} lg={4} xl={10}>
                 {confidence}
               </Col>
             </Row>
