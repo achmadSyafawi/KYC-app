@@ -4,10 +4,10 @@ import { Vision } from "@glair/vision";
 const apiKey1 = process.env.NEXT_PUBLIC_API_KEY;
 const username = process.env.NEXT_PUBLIC_TOKEN_UNAME;
 const password = process.env.NEXT_PUBLIC_TOKEN_PASS;
+const basicAuth =
+  "Basic " + Buffer.from(`${username}:${password}`).toString("base64");
 
 export const senApi = async ({ img, type }) => {
-  const basicAuth =
-    "Basic " + Buffer.from(`${username}:${password}`).toString("base64");
   const apiKey = apiKey1;
   const data = new FormData();
   let url = "";
@@ -36,13 +36,40 @@ export const senApi = async ({ img, type }) => {
   try {
     const response = await fetch(url, config);
     const responseData = await response.json();
-    // const response = await fetch("/api/upload", config);
-
-    // console.log(responseData);
-    // return response.json();
 
     return responseData;
   } catch (err) {
+    return { success: false, errMsg: err.message };
+  }
+};
+
+export const faceVerification = async ({
+  captureImage,
+  nik,
+  name,
+  dateOfBirth,
+}) => {
+  const url = "/identity/v1/face-verification";
+  const data = new FormData();
+  data.set("nik", nik);
+  data.set("name", name);
+  data.set("date_of_birth", dateOfBirth);
+  data.set("face_image", captureImage);
+  const config = {
+    method: "POST",
+    headers: {
+      Authorization: basicAuth,
+      "x-api-key": apiKey1,
+    },
+    body: data,
+  };
+
+  try {
+    const response = await fetch(url, config);
+    const responseData = await response.json();
+
+    return responseData;
+  } catch (error) {
     return { success: false, errMsg: err.message };
   }
 };

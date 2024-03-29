@@ -5,6 +5,8 @@ import { Button, Flex, message, Steps, theme } from "antd";
 import Start from "@/component/contentPage/Start";
 import GovermentId from "@/component/contentPage/GovermentId";
 import LastResult from "@/component/contentPage/LastResult";
+import FaceMatch from "../component/contentPage/FaceMatch";
+import Dukcapil from "../component/contentPage/Dukcapil";
 const steps = [
   {
     key: "start",
@@ -17,6 +19,15 @@ const steps = [
     content: "Goverment-id-verification",
   },
   {
+    key: "facematch",
+    title: "Face Match",
+    content: "Face Match",
+  },
+  {
+    key: "dukcapil",
+    title: "DUKCAPIL",
+  },
+  {
     key: "success",
     title: "Success",
     content: "success",
@@ -27,6 +38,8 @@ const Home = () => {
   const [current, setCurrent] = useState(0);
   const [result, setResult] = useState([]);
   const [img, setImg] = useState(null);
+  const [faceVerifResult, setFaceVerifResult] = useState(null);
+  const [err, setErr] = useState(null);
 
   const next = (i) => {
     if (i > 0) {
@@ -43,6 +56,14 @@ const Home = () => {
   const handleSetResult = (res, img) => {
     setResult(res);
     setImg(img);
+  };
+
+  const handleSetFaceVerifResult = (res) => {
+    if (res["verification_status"] === true) {
+      setFaceVerifResult(res);
+    } else {
+      setErr(err);
+    }
     next();
   };
 
@@ -52,7 +73,7 @@ const Home = () => {
   }));
 
   const contentStyle = {
-    lineHeight: "100px",
+    lineHeight: "38px",
     textAlign: "center",
     color: token.colorTextTertiary,
     backgroundColor: token.colorFillAlter,
@@ -70,8 +91,29 @@ const Home = () => {
       return <GovermentId handleSetResult={handleSetResult} nextStep={next} />;
     }
 
+    if (steps[current].key === "facematch") {
+      return (
+        <FaceMatch
+          img={img}
+          handleFaceVerif={handleSetFaceVerifResult}
+          scanImgData={result}
+          nextStep={next}
+        />
+      );
+    }
+
+    if (steps[current].key === "dukcapil") {
+      return <Dukcapil nextStep={next} />;
+    }
+
     if (steps[current].key === "success") {
-      return <LastResult result={result} img={img} />;
+      return (
+        <LastResult
+          resultFaceVerif={faceVerifResult}
+          resultScanImg={result}
+          err={err}
+        />
+      );
     }
   };
 
