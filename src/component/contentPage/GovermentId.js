@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { Button, Col, Form, Row, Select } from "antd";
+import { Alert, Button, Col, Form, Row, Select } from "antd";
 import { senApi } from "../utils";
 import Result from "./Result";
 
@@ -27,6 +27,7 @@ const GovermentId = ({ handleSetResult, nextStep }) => {
       setError(null);
     } else {
       setError(res);
+      setIsLoading(false);
     }
   };
 
@@ -42,15 +43,16 @@ const GovermentId = ({ handleSetResult, nextStep }) => {
             paddingTop: "10px",
             paddingBottom: "10px",
             paddingLeft: "10px",
+            paddingRight: "10px",
           }}
           layout="vertical"
           onFinish={onSubmit}
         >
-          {error ? <div>{error.error}</div> : null}
+          {error ? <Alert type="error" description={error.error} /> : null}
           <Form.Item
             name="govermentId"
             label="Goverment Id"
-            rules={[{ required: true }]}
+            rules={[{ required: true, message: "Goverment ID is Required" }]}
           >
             <Select
               placeholder="Select government ID to verify your identity"
@@ -95,8 +97,8 @@ const GovermentId = ({ handleSetResult, nextStep }) => {
               ) : null;
             }}
           </Form.Item>
-          <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
-            <Button type="primary" htmlType="submit" disabled={isLoading}>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" disabled={isLoading} block>
               {!isLoading ? "Scan" : "Loading"}
             </Button>
           </Form.Item>

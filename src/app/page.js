@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import { Button, Flex, message, Steps, theme } from "antd";
+import { Button, Flex, Layout, message, Steps, theme } from "antd";
 import Start from "@/component/contentPage/Start";
 import GovermentId from "@/component/contentPage/GovermentId";
 import LastResult from "@/component/contentPage/LastResult";
 import FaceMatch from "../component/contentPage/FaceMatch";
 import Dukcapil from "../component/contentPage/Dukcapil";
+const { Header, Content, Footer } = Layout;
 const steps = [
   {
     key: "start",
@@ -33,6 +34,16 @@ const steps = [
     content: "success",
   },
 ];
+
+const style = {
+  contentContainer: {
+    backgroundColor: "white",
+    padding: "24px",
+  },
+  content: {
+    padding: "48px 48px",
+  },
+};
 const Home = () => {
   const { token } = theme.useToken();
   const [current, setCurrent] = useState(0);
@@ -65,6 +76,18 @@ const Home = () => {
       setErr(err);
     }
     next();
+  };
+
+  const isDisable = () => {
+    if (steps[current].key === "start") {
+      return false;
+    }
+
+    if (steps[current].key === "govid") {
+      return result.length <= 0;
+    }
+
+    return false;
   };
 
   const items = steps.map((item) => ({
@@ -117,43 +140,59 @@ const Home = () => {
     }
   };
 
+  console.log("result::", result.length <= 0);
+
   return (
-    <Flex gap="middle" justify="center" vertical style={{ margin: "10%" }}>
-      <Steps current={current} items={items} />
+    <Layout>
+      <Header></Header>
+      <Content style={{ ...style.content }}>
+        <Flex
+          gap="middle"
+          justify="center"
+          vertical
+          style={{ ...style.contentContainer }}
+        >
+          <Steps current={current} items={items} />
 
-      <div style={contentStyle}>{content()}</div>
+          <div style={contentStyle}>{content()}</div>
 
-      {/* button */}
-      <div
-        style={{
-          marginTop: 24,
-        }}
-      >
-        {current < steps.length - 1 && (
-          <Button type="primary" onClick={() => next()}>
-            Next
-          </Button>
-        )}
-        {current === steps.length - 1 && (
-          <Button
-            type="primary"
-            onClick={() => message.success("Processing complete!")}
-          >
-            Done
-          </Button>
-        )}
-        {current > 0 && (
-          <Button
+          <div
             style={{
-              margin: "0 8px",
+              marginTop: 24,
             }}
-            onClick={() => prev()}
           >
-            Previous
-          </Button>
-        )}
-      </div>
-    </Flex>
+            {current < steps.length - 1 && (
+              <Button
+                type="primary"
+                onClick={() => next()}
+                disabled={isDisable()}
+              >
+                Next
+              </Button>
+            )}
+            {current === steps.length - 1 && (
+              <Button
+                type="primary"
+                onClick={() => message.success("Processing complete!")}
+              >
+                Done
+              </Button>
+            )}
+            {current > 0 && (
+              <Button
+                style={{
+                  margin: "0 8px",
+                }}
+                onClick={() => prev()}
+              >
+                Previous
+              </Button>
+            )}
+          </div>
+        </Flex>
+      </Content>
+      <Footer></Footer>
+    </Layout>
   );
 };
 export default Home;
