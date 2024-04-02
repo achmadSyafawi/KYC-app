@@ -140,12 +140,10 @@ const Home = () => {
     }
   };
 
-  console.log("result::", result.length <= 0);
-
   return (
     <Layout>
       <Header></Header>
-      <Content style={{ ...style.content }}>
+      <Content className="page-content">
         <Flex
           gap="middle"
           justify="center"
