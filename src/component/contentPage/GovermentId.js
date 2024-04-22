@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { Alert, Button, Col, Form, Row, Select } from "antd";
+import { Alert, Button, Col, Form, Row, Select, Upload } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 import { senApi } from "../utils";
 import Result from "./Result";
 
@@ -82,14 +83,21 @@ const GovermentId = ({ handleSetResult, nextStep }) => {
                   ]}
                 >
                   <input
+                    className="ant-upload ant-upload-select"
                     type="file"
                     onChange={(e) => setImgs(e.target.files?.[0])}
                   ></input>
+
                   {imgs ? (
                     <Image
                       src={`${URL.createObjectURL(imgs)}`}
-                      width={250}
-                      height={250}
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        paddingTop: "5px",
+                      }}
+                      width={400}
+                      height={300}
                       alt="Picture upload"
                     />
                   ) : null}
