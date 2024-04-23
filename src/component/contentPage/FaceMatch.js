@@ -51,9 +51,14 @@ const FaceMatch = ({ img, handleFaceVerif, scanImgData }) => {
             {captureImage ? (
               <Image
                 src={`${URL.createObjectURL(captureImage)}`}
-                width={250}
-                height={250}
-                alt="Picture upload"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  paddingTop: "5px",
+                }}
+                width={400}
+                height={300}
+                alt="capture image"
               />
             ) : null}
           </Form.Item>
@@ -71,8 +76,13 @@ const FaceMatch = ({ img, handleFaceVerif, scanImgData }) => {
       <Col xs={24} lg={12}>
         <Image
           src={`${URL.createObjectURL(img)}`}
-          width={250}
-          height={250}
+          style={{
+            width: "100%",
+            height: "auto",
+            paddingTop: "5px",
+          }}
+          width={400}
+          height={300}
           alt="Picture upload"
         />
       </Col>

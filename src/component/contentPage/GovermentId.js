@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Alert, Button, Col, Form, Row, Select, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { senApi } from "../utils";
+import { scanImgWithQuality } from "../utils";
 import Result from "./Result";
 
 const { Option } = Select;
@@ -16,7 +16,7 @@ const GovermentId = ({ handleSetResult, nextStep }) => {
 
   const onSubmit = async () => {
     setIsLoading(true);
-    const res = await senApi({
+    const res = await scanImgWithQuality({
       img: imgs,
       type: form.getFieldValue("govermentId"),
     });
@@ -48,6 +48,9 @@ const GovermentId = ({ handleSetResult, nextStep }) => {
           }}
           layout="vertical"
           onFinish={onSubmit}
+          onValuesChange={() => {
+            setResultData(null);
+          }}
         >
           {error ? <Alert type="error" description={error.error} /> : null}
           <Form.Item
@@ -113,7 +116,7 @@ const GovermentId = ({ handleSetResult, nextStep }) => {
         </Form>
       </Col>
       <Col xs={24} lg={12}>
-        <Result result={resultData} />
+        <Result result={resultData} type={form.getFieldValue("govermentId")} />
       </Col>
     </Row>
   );
