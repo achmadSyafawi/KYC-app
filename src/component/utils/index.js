@@ -109,3 +109,15 @@ export const faceVerification = async ({
     return { success: false, errMsg: err.message };
   }
 };
+
+export const camelCaseToWord = (s = "") => {
+  const result = s.replace(/([A-Z])/g, " $1");
+  return result.charAt(0).toUpperCase() + result.slice(1);
+};
+
+export const underscoreToWord = (s = "") => {
+  const result = s.replace(/^_*(.)|_+(.)/g, (s, c, d) =>
+    c ? c.toUpperCase() : " " + d.toUpperCase()
+  );
+  return result;
+};
