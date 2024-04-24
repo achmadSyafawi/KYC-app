@@ -63,7 +63,7 @@ export const scanImgWithQuality = async ({ img, type }) => {
     url = `/ocr/v1/ktp/qualities`;
   } else if (type === "npwp") {
     url = `/ocr/v1/npwp`;
-  } else if (type === "sim") {
+  } else if (type === "kk") {
     url = `/ocr/v1/kk`;
   } else {
     url = `/ocr/v1/sim`;

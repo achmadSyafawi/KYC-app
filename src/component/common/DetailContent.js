@@ -72,7 +72,6 @@ const DetailContent = ({ result, type }) => {
   }
 
   if (result !== null && type === "kk") {
-    const itemRead = Object.keys(result.read.table[0]);
     const itemOrder = [
       "nomor_kk",
       "nama_kepala_keluarga",
